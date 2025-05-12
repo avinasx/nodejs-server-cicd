@@ -143,6 +143,33 @@ sudo dpkg -i codedeploy-agent_1.0-1.1597_ubuntu20.deb
 sudo systemctl start codedeploy-agent
 ```
 ```sh
+
+
+
+
+
+
+
+
+## to auto pull using github action
+
+do this on your server 
+
+Store username and password in .git-credentials
+.git-credentials is where your username and password (access token) is stored when you run git config --global credential.helper store, which is what other answers suggest, and then type in your username and password or access token:
+
+https://${username}:${password_or_access_token}@github.com
+So, in order to save the username and password (access token):
+
+git config --global credential.helper store
+echo "https://${username}:${password_or_access_token}@github.com" > ~/.git-credentials
+Replace ${username} with your username, ${password_or_access_token} with your password (not recommended) or your access token.
+
+NOTE that you must provide access token if you enabled 2FA on GitHub.
+
+Using access token is recommended.
+
+This is very useful for a GitHub robot, e.g. to solve Chain automated builds in the same Docker Hub repository by having rules for different branch and then trigger it by pushing to it in the post_push hook in Docker Hub.
 sudo systemctl enable codedeploy-agent
 ```
 
